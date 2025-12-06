@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpringFrameworkApplication implements CommandLineRunner{
 
+	// Autowiring the demo component
 	@Autowired
 	demo d;
 	public static void main(String[] args) {
@@ -15,10 +16,10 @@ public class SpringFrameworkApplication implements CommandLineRunner{
 	
 	}
 
-	
+
 	@Override
 	public void run(String... args) throws Exception {
-		// generates runtime error
+		// Calling the display method of demo component
 		d.display();
 	}
 
