@@ -1,13 +1,22 @@
 package com.Spring_Framework.Practice.Spring_Framework;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringFrameworkApplication {
+public class SpringFrameworkApplication implements CommandLineRunner{
 
+	demo d;
 	public static void main(String[] args) {
 		SpringApplication.run(SpringFrameworkApplication.class, args);
+	
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		
+		d.display();
 	}
 
 }
