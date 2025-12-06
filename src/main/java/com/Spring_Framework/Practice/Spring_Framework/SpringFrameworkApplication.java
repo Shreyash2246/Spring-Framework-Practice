@@ -25,6 +25,10 @@ public class SpringFrameworkApplication implements CommandLineRunner{
 		// Using the demo bean
 		d1.display();
 		d2.display();
+
+		// Print hashcodes to show they are different instances(prototype scope)
+		System.out.println(d1.hashCode());
+		System.out.println(d2.hashCode());
 	}
 
 }

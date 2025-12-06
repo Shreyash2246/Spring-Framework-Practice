@@ -2,13 +2,14 @@ package com.Spring_Framework.Practice.Spring_Framework;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
-// Marking this class as a configuration class
+
 @Configuration
 public class configClass {
-    
-    // Defining a bean for demo class
+
     @Bean
+    @Scope("prototype") // Setting the scope to prototype
     demo getDemo() {
         return new demo();
     }
