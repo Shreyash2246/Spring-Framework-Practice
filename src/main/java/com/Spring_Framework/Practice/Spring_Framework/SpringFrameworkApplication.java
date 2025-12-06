@@ -16,7 +16,6 @@ public class SpringFrameworkApplication implements CommandLineRunner{
 	
 	}
 
-
 	@Override
 	public void run(String... args) throws Exception {
 		// Calling the display method of demo component
