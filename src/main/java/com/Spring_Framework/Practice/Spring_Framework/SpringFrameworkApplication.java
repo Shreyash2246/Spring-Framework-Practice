@@ -8,9 +8,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpringFrameworkApplication implements CommandLineRunner{
 
-	// Autowiring the demo component
+	// singleton scope by default
 	@Autowired
-	demo d;
+	demo d1;
+
+	@Autowired
+	demo d2;
+
 	public static void main(String[] args) {
 		SpringApplication.run(SpringFrameworkApplication.class, args);
 	
@@ -18,8 +22,9 @@ public class SpringFrameworkApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		// Calling the display method of demo component
-		d.display();
+		// Using the demo bean
+		d1.display();
+		d2.display();
 	}
 
 }
