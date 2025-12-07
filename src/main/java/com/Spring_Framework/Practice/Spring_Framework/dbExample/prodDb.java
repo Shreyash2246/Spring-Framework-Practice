@@ -1,10 +1,10 @@
 package com.Spring_Framework.Practice.Spring_Framework.dbExample;
 
-import org.springframework.context.annotation.Primary;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @Component
-@Primary
+@ConditionalOnProperty(name = "deploy.env", havingValue = "production")
 public class prodDb implements specificationDB {
     
     public String getData() {
