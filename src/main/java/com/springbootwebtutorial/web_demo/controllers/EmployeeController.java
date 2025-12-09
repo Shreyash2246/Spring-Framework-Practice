@@ -13,19 +13,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
+// parent path for all methods in this controller
 @RequestMapping(path = "/employees")
 public class EmployeeController {
 
-        // Sample endpoint to get an employee by ID
-        @GetMapping(path = "/{id}")
-        public EmployeeDTO getEmployeeById(@PathVariable Long id) {
+        // GET http://localhost:8080/employees/{employeeId}
+        // name parameter in @PathVariable should match the placeholder in the URL
+        @GetMapping(path = "/{employeeId}")
+        public EmployeeDTO getEmployeeById(@PathVariable(name = "employeeId") Long id) {
             return new EmployeeDTO(id, "John Doe", "john.doe@example.com", 30, LocalDate.of(2020, 1, 15), true);
         }
 
-        // Sample endpoint to demonstrate query parameters
-        // path: /employees?age=25&sortby=name
+        // GET http://localhost:8080/employees?EmployeeAge=25&sortby=name
+        // used name attribute in @RequestParam to map request param EmployeeAge to method param age
         @GetMapping
-        public String getMethodName(@RequestParam(required = false) Integer age, 
+        public String getMethodName(@RequestParam(required = false, name = "EmployeeAge") Integer age, 
                                     @RequestParam(required = false) String sortby) {
             return "The age is " + age+" and sortby is "+sortby;
         }
