@@ -2,9 +2,8 @@ package com.springbootwebtutorial.web_demo.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springbootwebtutorial.web_demo.dto.EmployeeDTO;
 import com.springbootwebtutorial.web_demo.entities.EmployeeEntity;
-import com.springbootwebtutorial.web_demo.repositories.EmployeeRepository;
-
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,52 +14,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-// reportory injection in controller
-// not using service layer for now also not recommended for production level code
+import com.springbootwebtutorial.web_demo.services.employeeService;
+
 @RestController
 @RequestMapping(path = "/employees")
 public class EmployeeController {
 
-    // dependency injection via constructor
-    private final EmployeeRepository employeeRepository;
+    
+    private final employeeService employeeService;
 
-    public EmployeeController(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeController(employeeService employeeService) {
+        this.employeeService = employeeService;
     }
     
     // http://localhost:9090/employees/1
     @GetMapping("/{id}")
-    public EmployeeEntity getEmployeeById(@PathVariable("id") Long id) {
-        return employeeRepository.findById(id).orElse(null);
+    public EmployeeDTO getEmployeeById(@PathVariable("id") Long id) {
+        return employeeService.getEmployeeById(id);
     }
 
     // http://localhost:9090/employees
     @GetMapping
-    public List<EmployeeEntity> getAllEmployees(@RequestParam(required = false) Integer age,
+    public List<EmployeeDTO> getAllEmployees(@RequestParam(required = false) Integer age,
                                                 @RequestParam(required = false) String sortby) {
-        return employeeRepository.findAll();
+        return employeeService.getAllEmployees(age, sortby);
     }
     
     // http://localhost:9090/employees/create
     @PostMapping("/create")
-    public EmployeeEntity createNewEmployee(@RequestBody EmployeeEntity inputEmployee){
-        return employeeRepository.save(inputEmployee);
+    public EmployeeDTO createNewEmployee(@RequestBody EmployeeEntity inputEmployee){
+        return employeeService.createNewEmployee(inputEmployee);
     }
 
     // http://localhost:9090/employees/update
     @PutMapping("/update")
-    public String updaEmployee() {
+    public String updateEmployee() {
         return "Update Employee called";
     }
 
-    // raw json data for testing
-    /*
-    {
-        "name": "John Doe",
-        "email": "john.doe@example.com",
-        "age": 30,
-        "dateOfJoining": "2023-10-01",
-        "isActive": true
-    }
-    */
 }
