@@ -3,7 +3,7 @@ package com.springbootwebtutorial.web_demo.dto;
 import java.time.LocalDate;
 
 public class EmployeeDTO {
-    private long id;
+    private Long id;
     private String name;
     private String email;
     private int age;
@@ -15,7 +15,7 @@ public class EmployeeDTO {
     }
 
     // parameterized constructor
-    public EmployeeDTO(long id, String name, String email, int age, LocalDate dateOfJoining, boolean isActive) {
+    public EmployeeDTO(Long id, String name, String email, int age, LocalDate dateOfJoining, boolean isActive) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -25,10 +25,10 @@ public class EmployeeDTO {
     }
 
     // Getters and Setters
-    public long getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getName() {

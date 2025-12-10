@@ -2,34 +2,65 @@ package com.springbootwebtutorial.web_demo.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springbootwebtutorial.web_demo.dto.EmployeeDTO;
+import com.springbootwebtutorial.web_demo.entities.EmployeeEntity;
+import com.springbootwebtutorial.web_demo.repositories.EmployeeRepository;
 
-import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+// reportory injection in controller
+// not using service layer for now also not recommended for production level code
 @RestController
-// parent path for all methods in this controller
 @RequestMapping(path = "/employees")
 public class EmployeeController {
 
-        // GET http://localhost:8080/employees/{employeeId}
-        // name parameter in @PathVariable should match the placeholder in the URL
-        @GetMapping(path = "/{employeeId}")
-        public EmployeeDTO getEmployeeById(@PathVariable(name = "employeeId") Long id) {
-            return new EmployeeDTO(id, "John Doe", "john.doe@example.com", 30, LocalDate.of(2020, 1, 15), true);
-        }
+    // dependency injection via constructor
+    private final EmployeeRepository employeeRepository;
 
-        // GET http://localhost:8080/employees?EmployeeAge=25&sortby=name
-        // used name attribute in @RequestParam to map request param EmployeeAge to method param age
-        @GetMapping
-        public String getMethodName(@RequestParam(required = false, name = "EmployeeAge") Integer age, 
-                                    @RequestParam(required = false) String sortby) {
-            return "The age is " + age+" and sortby is "+sortby;
-        }
-        
+    public EmployeeController(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+    
+    // http://localhost:9090/employees/1
+    @GetMapping("/{id}")
+    public EmployeeEntity getEmployeeById(@PathVariable("id") Long id) {
+        return employeeRepository.findById(id).orElse(null);
+    }
+
+    // http://localhost:9090/employees
+    @GetMapping
+    public List<EmployeeEntity> getAllEmployees(@RequestParam(required = false) Integer age,
+                                                @RequestParam(required = false) String sortby) {
+        return employeeRepository.findAll();
+    }
+    
+    // http://localhost:9090/employees/create
+    @PostMapping("/create")
+    public EmployeeEntity createNewEmployee(@RequestBody EmployeeEntity inputEmployee){
+        return employeeRepository.save(inputEmployee);
+    }
+
+    // http://localhost:9090/employees/update
+    @PutMapping("/update")
+    public String updaEmployee() {
+        return "Update Employee called";
+    }
+
+    // raw json data for testing
+    /*
+    {
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "age": 30,
+        "dateOfJoining": "2023-10-01",
+        "isActive": true
+    }
+    */
 }
