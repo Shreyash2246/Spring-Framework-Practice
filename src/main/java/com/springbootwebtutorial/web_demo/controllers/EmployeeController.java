@@ -46,10 +46,9 @@ public class EmployeeController {
         return employeeService.createNewEmployee(inputEmployee);
     }
 
-    // http://localhost:9090/employees/update
-    @PutMapping("/update")
-    public String updateEmployee() {
-        return "Update Employee called";
+    // http://localhost:9090/employees/{id}
+    @PutMapping(path = "/{id}")
+    public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO employeeDTO, @PathVariable Long id) {
+        return employeeService.getEmployeeById(id, employeeDTO);
     }
-
 }

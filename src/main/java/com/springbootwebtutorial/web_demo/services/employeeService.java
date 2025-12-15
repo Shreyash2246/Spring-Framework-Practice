@@ -42,4 +42,12 @@ public class employeeService {
         return modelMapper.map(savedEmployee, EmployeeDTO.class);
     }
 
+
+    public EmployeeDTO getEmployeeById(Long id, EmployeeDTO employeeDTO) {
+        EmployeeEntity employeeEntity = modelMapper.map(employeeDTO, EmployeeEntity.class);
+        employeeEntity.setId(id);
+        EmployeeEntity savedEmployeeEntity = employeeRepository.save(employeeEntity);
+        return modelMapper.map(savedEmployeeEntity, EmployeeDTO.class);
+    }
+
 }
