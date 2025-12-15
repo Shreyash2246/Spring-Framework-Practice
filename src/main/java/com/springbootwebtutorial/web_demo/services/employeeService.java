@@ -1,9 +1,12 @@
 package com.springbootwebtutorial.web_demo.services;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.util.ReflectionUtils;
 import org.springframework.stereotype.Service;
 
 import com.springbootwebtutorial.web_demo.dto.EmployeeDTO;
@@ -49,13 +52,29 @@ public class employeeService {
         return modelMapper.map(savedEmployeeEntity, EmployeeDTO.class);
     }
 
+    public boolean isEmployeeExist(Long id) {
+        return employeeRepository.existsById(id);
+    }
+
     public Boolean deleteEmployeeById(Long id) {
-        boolean exists = employeeRepository.existsById(id);
+        boolean exists = isEmployeeExist(id);
         if (!exists) {
             return false;
         }
         employeeRepository.deleteById(id);
         return true;
+    }
+
+    public EmployeeDTO patchEmployee(Long id, Map<String,Object> updates) {
+        boolean exists = isEmployeeExist(id);
+        if (!exists) return null;
+        EmployeeEntity employeeEntity = employeeRepository.findById(id).get();
+        updates.forEach((field, value) -> {
+            Field fieldToUpdate = ReflectionUtils.getRequiredField(EmployeeEntity.class, field);
+            fieldToUpdate.setAccessible(true);
+            ReflectionUtils.setField(fieldToUpdate, employeeEntity, value);
+        });
+        return modelMapper.map(employeeRepository.save(employeeEntity), EmployeeDTO.class);
     }
 
 }
