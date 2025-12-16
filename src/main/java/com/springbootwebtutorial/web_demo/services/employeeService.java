@@ -3,6 +3,7 @@ package com.springbootwebtutorial.web_demo.services;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -25,9 +26,11 @@ public class employeeService {
         this.modelMapper = modelMapper;
     }
 
-    public EmployeeDTO getEmployeeById(Long id) {
-        EmployeeEntity employeeEntity = employeeRepository.findById(id).orElse(null);
-        return modelMapper.map(employeeEntity, EmployeeDTO.class);
+    // return Optional.empty() if not found
+    public Optional<EmployeeDTO> getEmployeeById(Long id) {
+        Optional<EmployeeEntity> employeeEntity = employeeRepository.findById(id);
+        return employeeEntity
+                .map(entity -> modelMapper.map(entity, EmployeeDTO.class));
     }
 
     public List<EmployeeDTO> getAllEmployees(Integer age, String sortby) {
