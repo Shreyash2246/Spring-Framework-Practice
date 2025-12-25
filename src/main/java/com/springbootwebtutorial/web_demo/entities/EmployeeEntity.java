@@ -19,6 +19,8 @@ public class EmployeeEntity {
     private String name;
     private String email;
     private int age;
+    private Double salary;
+    private String role;
     private LocalDate dateOfJoining;
     private boolean isActive;
 }
