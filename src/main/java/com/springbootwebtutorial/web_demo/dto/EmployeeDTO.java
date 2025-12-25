@@ -2,6 +2,8 @@ package com.springbootwebtutorial.web_demo.dto;
 
 import java.time.LocalDate;
 
+import com.springbootwebtutorial.web_demo.annotations.EmployeeRoleValidation;
+
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
@@ -12,7 +14,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -48,7 +49,7 @@ public class EmployeeDTO {
     private Double salary;
 
     @NotBlank(message = "role cannot be blank")
-    @Pattern(regexp = "^(ADMIN|USER)$", message = "role must be either ADMIN or USER")
+    @EmployeeRoleValidation
     private String role;
 
     @PastOrPresent(message = "dateOfJoining cannot be in the future")
