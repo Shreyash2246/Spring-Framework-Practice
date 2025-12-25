@@ -40,7 +40,7 @@ public class employeeService {
                 .collect(Collectors.toList());
     }
 
-    public EmployeeDTO createNewEmployee(EmployeeEntity inputEmployee) {
+    public EmployeeDTO createNewEmployee(EmployeeDTO inputEmployee) {
         // we can also add validation logic here
         // admin or employee role check can be done here
         EmployeeEntity toSaveEntity = modelMapper.map(inputEmployee, EmployeeEntity.class);

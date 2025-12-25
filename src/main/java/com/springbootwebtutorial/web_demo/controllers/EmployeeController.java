@@ -3,7 +3,6 @@ package com.springbootwebtutorial.web_demo.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springbootwebtutorial.web_demo.dto.EmployeeDTO;
-import com.springbootwebtutorial.web_demo.entities.EmployeeEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +21,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.springbootwebtutorial.web_demo.services.employeeService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/employees")
@@ -52,11 +53,11 @@ public class EmployeeController {
                                                 @RequestParam(required = false) String sortby) {
         return ResponseEntity.ok(employeeService.getAllEmployees(age, sortby));
     }
-    
+
     // http://localhost:9090/employees/create
     // here we used HTTP.CREATED status code which is 201
     @PostMapping("/create")
-    public ResponseEntity<EmployeeDTO> createNewEmployee(@RequestBody EmployeeEntity inputEmployee){
+    public ResponseEntity<EmployeeDTO> createNewEmployee(@RequestBody @Valid EmployeeDTO inputEmployee){
         EmployeeDTO savedEmployee = employeeService.createNewEmployee(inputEmployee);
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
