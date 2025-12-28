@@ -8,8 +8,9 @@ import jakarta.validation.ConstraintValidatorContext;
 public class EmployeeRoleValidator implements ConstraintValidator<EmployeeRoleValidation, String> {
 
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
+    public boolean isValid(String inputRole, ConstraintValidatorContext context) {
+        if(inputRole == null) return false;
         List<String> Roles = List.of("ADMIN", "USER");
-        return Roles.contains(value);
+        return Roles.contains(inputRole);
     }
 }

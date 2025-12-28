@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.springbootwebtutorial.web_demo.dto.EmployeeDTO;
 import com.springbootwebtutorial.web_demo.entities.EmployeeEntity;
+import com.springbootwebtutorial.web_demo.exceptions.ResourceNotFoundException;
 import com.springbootwebtutorial.web_demo.repositories.EmployeeRepository;
 
 @Service
@@ -48,7 +49,9 @@ public class employeeService {
         return modelMapper.map(savedEmployee, EmployeeDTO.class);
     }
 
-    public EmployeeDTO getEmployeeById(Long id, EmployeeDTO employeeDTO) {
+    public EmployeeDTO updateEmployeeById(Long id, EmployeeDTO employeeDTO) {
+        boolean exists = isEmployeeExist(id);
+        if (!exists) throw new ResourceNotFoundException("Employee do not Exist" + id);
         EmployeeEntity employeeEntity = modelMapper.map(employeeDTO, EmployeeEntity.class);
         employeeEntity.setId(id);
         EmployeeEntity savedEmployeeEntity = employeeRepository.save(employeeEntity);
