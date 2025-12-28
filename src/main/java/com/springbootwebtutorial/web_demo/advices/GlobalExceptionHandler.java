@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiError> handlerInternalServerError(Exception exception) {
+    public ResponseEntity<ApiError> MethodArgumentNotValidException(Exception exception) {
         ApiError apiError = ApiError.builder()
                             .status(HttpStatus.INTERNAL_SERVER_ERROR)
                             .message(exception.getMessage())
