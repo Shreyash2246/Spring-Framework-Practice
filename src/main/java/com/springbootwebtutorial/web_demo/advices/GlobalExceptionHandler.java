@@ -12,7 +12,8 @@ public class GlobalExceptionHandler {
     
     // employee not found by id
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<String> handlerResourceNotFound(NoSuchElementException exception) {
-        return new ResponseEntity<>("Resource not found: ", HttpStatus.NOT_FOUND);
+    public ResponseEntity<ApiError> handlerResourceNotFound(NoSuchElementException exception) {
+        ApiError apiError = ApiError.builder().status(HttpStatus.NOT_FOUND).message("Resource not found").build();
+        return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
 }
