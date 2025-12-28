@@ -11,7 +11,6 @@ import com.springbootwebtutorial.web_demo.exceptions.ResourceNotFoundException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     
-    // employee not found by id
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiError> handlerResourceNotFound(ResourceNotFoundException exception) {
         ApiError apiError = ApiError.builder()
@@ -19,5 +18,14 @@ public class GlobalExceptionHandler {
                             .message(exception.getMessage())
                             .build();
         return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiError> handlerInternalServerError(Exception exception) {
+        ApiError apiError = ApiError.builder()
+                            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .message(exception.getMessage())
+                            .build();
+        return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
