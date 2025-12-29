@@ -56,6 +56,6 @@ public class EmployeeDTO {
     private LocalDate dateOfJoining;
 
     @AssertTrue(message = "isActive must be true")
-    private boolean isActive;
+    private Boolean isActive;
     
 }
